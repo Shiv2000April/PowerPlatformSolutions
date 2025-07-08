@@ -11,11 +11,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install Power Platform CLI
+    - name: Install Power Platform CLI (via dotnet tool)
       run: |
-        iwr -useb https://aka.ms/pac -outfile pac-installer.ps1
-        powershell -ExecutionPolicy Bypass -File pac-installer.ps1
+        dotnet tool install --global Microsoft.PowerApps.CLI.Tool
+        echo "##[add-path]C:\Users\Shivam Gupta\.dotnet\tools"
 
     - name: Run import.ps1 to deploy managed solution
       shell: pwsh
       run: ./pipelines/import.ps1
+
