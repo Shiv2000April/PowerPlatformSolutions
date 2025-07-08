@@ -14,9 +14,10 @@ jobs:
     - name: Install Power Platform CLI (via dotnet tool)
       run: |
         dotnet tool install --global Microsoft.PowerApps.CLI.Tool
-        echo "##[add-path]C:\Users\Shivam Gupta\.dotnet\tools"
+        echo "C:\Users\Shivam Gupta\.dotnet\tools" | Out-File -FilePath  -Append
 
     - name: Run import.ps1 to deploy managed solution
       shell: pwsh
       run: ./pipelines/import.ps1
+
 
