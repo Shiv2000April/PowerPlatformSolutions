@@ -11,22 +11,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install Power Platform CLI (via MSI installer)
-      shell: powershell
+    - name: Install Power Platform CLI using .NET global tool
+      shell: pwsh
       run: |
-        Invoke-WebRequest -Uri "https://aka.ms/PowerAppsCLI" -OutFile "pac.msi"
-        Start-Process msiexec.exe -ArgumentList '/i pac.msi /quiet /norestart' -Wait
-        Write-Host "PAC CLI installed successfully."
-
-    - name: Add PAC CLI to PATH
-      shell: powershell
-      run: |
-        $pacPath = "C:\Program Files (x86)\Microsoft Power Platform CLI"
-        $env:PATH = "$pacPath;$env:PATH"
-        [System.Environment]::SetEnvironmentVariable("PATH", $env:PATH, [System.EnvironmentVariableTarget]::Process)
+        dotnet tool install --global Microsoft.PowerApps.CLI.Tool
+        echo "$env:USERPROFILE\.dotnet\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
     - name: Run import.ps1 to deploy managed solution
       shell: pwsh
-      run: |
-        $env:PATH = "C:\Program Files (x86)\Microsoft Power Platform CLI;$env:PATH"
-        ./pipelines/import.ps1
+      run: ./pipelines/import.ps1
