@@ -1,9 +1,6 @@
 # Authenticate to Target environment (UAT or PROD)
-pac auth create --url https://orgc388d7c8.crm.dynamics.com/
-
-# OPTIONAL: Update the environment variable value here if needed
-# You can use PowerShell to search/replace inside the EnvironmentVariableValues.xml
-# or simply edit it manually before this script runs.
+pac auth clear
+pac auth create --environment https://orgc388d7c8.crm.dynamics.com/
 
 # Pack the solution as MANAGED
 pac solution pack `
