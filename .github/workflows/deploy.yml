@@ -1,4 +1,4 @@
-﻿name: Deploy to Target Environment
+name: Deploy to Target Environment
 
 on:
   workflow_dispatch:
@@ -18,6 +18,15 @@ jobs:
         Start-Process msiexec.exe -ArgumentList '/i pac.msi /quiet /norestart' -Wait
         Write-Host "PAC CLI installed successfully."
 
+    - name: Add PAC CLI to PATH
+      shell: powershell
+      run: |
+        $pacPath = "C:\Program Files (x86)\Microsoft Power Platform CLI"
+        $env:PATH = "$pacPath;$env:PATH"
+        [System.Environment]::SetEnvironmentVariable("PATH", $env:PATH, [System.EnvironmentVariableTarget]::Process)
+
     - name: Run import.ps1 to deploy managed solution
       shell: pwsh
-      run: ./pipelines/import.ps1
+      run: |
+        $env:PATH = "C:\Program Files (x86)\Microsoft Power Platform CLI;$env:PATH"
+        ./pipelines/import.ps1
