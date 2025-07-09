@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="business_unit_sh_transferdata" />
+  <EntityRelationship Name="lk_sh_transferdata_createdby" />
+  <EntityRelationship Name="lk_sh_transferdata_modifiedby" />
+  <EntityRelationship Name="owner_sh_transferdata" />
+  <EntityRelationship Name="team_sh_transferdata" />
+  <EntityRelationship Name="user_sh_transferdata" />
+</EntityRelationships>
