@@ -1,0 +1,23 @@
+﻿name: Deploy to Target Environment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Power Platform CLI (via MSI installer)
+      shell: powershell
+      run: |
+        Invoke-WebRequest -Uri "https://aka.ms/PowerAppsCLI" -OutFile "pac.msi"
+        Start-Process msiexec.exe -ArgumentList '/i pac.msi /quiet /norestart' -Wait
+        Write-Host "PAC CLI installed successfully."
+
+    - name: Run import.ps1 to deploy managed solution
+      shell: pwsh
+      run: ./pipelines/import.ps1
